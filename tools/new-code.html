@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Генератор кодов гостей</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #FBEFDD;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 6px 40px rgba(110,20,34,0.12);
+      border: 1px solid #E9CDD0;
+    }
+    h1 {
+      font-family: Georgia, serif;
+      color: #6E1422;
+      font-size: 1.8rem;
+      margin-bottom: 0.3rem;
+    }
+    p { color: #7a5a60; font-size: 0.95rem; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    label { display: block; font-weight: 500; margin-bottom: 0.4rem; font-size: 0.9rem; }
+    input, select {
+      width: 100%;
+      padding: 0.65rem 1rem;
+      border: 1.5px solid #d9b4b8;
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus { border-color: #6E1422; }
+    .btn {
+      background: #6E1422;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .btn:hover { background: #4a0d17; }
+    .result { display: none; margin-top: 1.5rem; }
+    .result.visible { display: block; }
+    .result-box {
+      background: #f9f0e8;
+      border: 1px solid #E9CDD0;
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .result-label { font-size: 0.8rem; color: #7a5a60; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
+    .result-value { font-family: monospace; font-size: 0.95rem; word-break: break-all; color: #2a1a1e; }
+    .copy-btn {
+      background: transparent;
+      border: 1.5px solid #6E1422;
+      color: #6E1422;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: #6E1422; color: white; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🔑 Генератор кодов</h1>
+    <p>Введите данные гостя и получите готовый JSON-фрагмент для вставки в <code>guests.json</code>.</p>
+
+    <div class="form-group">
+      <label for="greeting">Приветствие гостя</label>
+      <input type="text" id="greeting" placeholder="Дорогая Катя!" />
+    </div>
+
+    <div class="form-group">
+      <label for="type">Тип гостя</label>
+      <select id="type">
+        <option value="default">default (без доп. блоков)</option>
+        <option value="friend">friend (+ поле «что хочется сказать»)</option>
+        <option value="family">family (+ вопрос про жильё)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="note">Заметка (только для вас, не светится)</label>
+      <input type="text" id="note" placeholder="Катя с работы" />
+    </div>
+
+    <button class="btn" onclick="generate()">Сгенерировать код</button>
+
+    <div class="result" id="result">
+      <div class="result-box">
+        <div class="result-label">Код гостя</div>
+        <div class="result-value" id="out-code"></div>
+        <button class="copy-btn" onclick="copy('out-code')">Копировать</button>
+      </div>
+
+      <div class="result-box">
+        <div class="result-label">Персональная ссылка</div>
+        <div class="result-value" id="out-link"></div>
+        <button class="copy-btn" onclick="copy('out-link')">Копировать</button>
+      </div>
+
+      <div class="result-box">
+        <div class="result-label">Фрагмент для guests.json</div>
+        <div class="result-value" id="out-json"></div>
+        <button class="copy-btn" onclick="copy('out-json')">Копировать</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // base32 alphabet without 0/O/1/I
+    const ALPHABET = 'abcdefghjkmnpqrstvwxyz23456789';
+
+    function randomCode(len = 6) {
+      let code = '';
+      const array = new Uint8Array(len);
+      crypto.getRandomValues(array);
+      for (const byte of array) {
+        code += ALPHABET[byte % ALPHABET.length];
+      }
+      return code;
+    }
+
+    function generate() {
+      const greeting = document.getElementById('greeting').value.trim() || 'Дорогой гость!';
+      const type     = document.getElementById('type').value;
+      const note     = document.getElementById('note').value.trim();
+      const code     = randomCode(6);
+
+      const baseUrl = window.location.origin + window.location.pathname.replace('/tools/new-code.html', '/');
+      const link = baseUrl + '?g=' + code;
+
+      const jsonObj = { greeting, type };
+      if (note) jsonObj.note = note;
+      const jsonFragment = `"${code}": ${JSON.stringify(jsonObj)}`;
+
+      document.getElementById('out-code').textContent = code;
+      document.getElementById('out-link').textContent = link;
+      document.getElementById('out-json').textContent = jsonFragment;
+      document.getElementById('result').classList.add('visible');
+    }
+
+    function copy(id) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target;
+        btn.textContent = 'Скопировано!';
+        setTimeout(() => btn.textContent = 'Копировать', 1500);
+      });
+    }
+  </script>
+</body>
+</html>
