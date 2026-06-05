@@ -120,12 +120,18 @@ function initCountdown() {
 
 /* ===== FORM SUBMISSION ===== */
 
+let formEndpoint = null;
+
 async function loadConfig() {
   try {
     const res = await fetch('config.json');
-    return await res.json();
+    const cfg = await res.json();
+    if (cfg.formEndpoint && cfg.formEndpoint !== 'ВСТАВЬ_СЮДА_URL_GOOGLE_APPS_SCRIPT') {
+      formEndpoint = cfg.formEndpoint;
+    }
   } catch (e) {
-    return null;
+    // file:// protocol or network error — endpoint stays null
+    console.warn('Could not load config.json. If testing locally, run via HTTP server (python3 -m http.server).');
   }
 }
 
@@ -148,31 +154,34 @@ function initForm() {
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
-    const config = await loadConfig();
-    const endpoint = config && config.formEndpoint !== 'ВСТАВЬ_СЮДА_URL_GOOGLE_APPS_SCRIPT'
-      ? config.formEndpoint
-      : null;
+    // URLSearchParams → sends as application/x-www-form-urlencoded
+    // which is the only format Google Apps Script's e.parameter can parse
+    const params = new URLSearchParams({
+      guest_code:    currentGuestCode,
+      name:          document.getElementById('name').value.trim(),
+      attending:     getRadioValue('attending'),
+      bus:           getRadioValue('bus'),
+      alcohol:       collectCheckboxValues('alcohol'),
+      allergies:     document.getElementById('allergies').value.trim(),
+      accommodation: getRadioValue('accommodation'),
+      message:       (document.getElementById('message') || {}).value || '',
+      comment:       document.getElementById('comment').value.trim(),
+      submitted_at:  new Date().toISOString(),
+    });
 
-    const data = new FormData();
-    data.append('guest_code', currentGuestCode);
-    data.append('name', document.getElementById('name').value.trim());
-    data.append('attending', getRadioValue('attending'));
-    data.append('bus', getRadioValue('bus'));
-    data.append('alcohol', collectCheckboxValues('alcohol'));
-    data.append('allergies', document.getElementById('allergies').value.trim());
-    data.append('accommodation', getRadioValue('accommodation'));
-    data.append('message', (document.getElementById('message') || {}).value || '');
-    data.append('comment', document.getElementById('comment').value.trim());
-    data.append('submitted_at', new Date().toISOString());
-
-    if (endpoint) {
+    if (formEndpoint) {
       try {
-        await fetch(endpoint, { method: 'POST', mode: 'no-cors', body: data });
+        await fetch(formEndpoint, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: params.toString(),
+        });
       } catch (err) {
         console.warn('Form submit error:', err);
       }
     } else {
-      console.info('No formEndpoint configured — form data logged:', Object.fromEntries(data));
+      console.info('No formEndpoint — данные (для отладки):', Object.fromEntries(params));
     }
 
     form.style.display = 'none';
@@ -184,6 +193,7 @@ function initForm() {
 /* ===== INIT ===== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  loadConfig();        // load endpoint early; non-blocking
   initPersonalization();
   initScrollReveal();
   initCountdown();

@@ -19,5 +19,5 @@
     { "name": "Катя", "phone": "8 921 632 77 43" }
   ],
   "glamping": "+7 981-889-38-37",
-  "formEndpoint": "ВСТАВЬ_СЮДА_URL_GOOGLE_APPS_SCRIPT"
+  "formEndpoint": "https://script.google.com/macros/s/AKfycbyRiw75duIeH0uIzVkvGTKfjM1yo5va3y5Gctmo_1p6eT2cTs_RIjSlLT4dU8nkt8w/exec"
 }
