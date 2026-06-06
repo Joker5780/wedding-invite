@@ -109,19 +109,19 @@
     </div>
   </section>
 
-  <!-- Wave cream → bordeaux -->
-  <div class="wave" aria-hidden="true" style="background:var(--cream);">
-    <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,45 C360,90 1080,0 1440,55 L1440,90 L0,90 Z" fill="#6E1422"/>
-    </svg>
-  </div>
+<!-- Wave cream → location -->
+<div class="wave wave--location" aria-hidden="true">
+  <svg viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#8C2B36" fill-opacity="1" d="M0,160L30,176C60,192,120,224,180,208C240,192,300,128,360,90.7C420,53,480,43,540,53.3C600,64,660,96,720,138.7C780,181,840,235,900,256C960,277,1020,267,1080,250.7C1140,235,1200,213,1260,213.3C1320,213,1380,235,1410,245.3L1440,256L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"></path>
+  </svg>
+</div>
 
   <!-- ===== LOCATION ===== -->
   <section id="location">
     <div class="container">
-      <p class="location-label reveal">Локация</p>
+      <p class="location-label reveal">Место проведения</p>
       <h2 class="location-title reveal">Ганинская ферма</h2>
-      <p class="location-address reveal">Ленинградская область, Ганино</p>
+      <p class="location-address reveal">Фермерский проезд, 1<br>(Рощинское городское поселение)</p>
 
       <img
         class="location-photo reveal"
@@ -132,75 +132,88 @@
 
       <div class="reveal">
         <a
-          href="https://yandex.ru/maps/?text=%D0%93%D0%B0%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F+%D1%84%D0%B5%D1%80%D0%BC%D0%B0"
+          href="https://yandex.ru/maps/-/CPd55R3u"
           target="_blank"
           rel="noopener"
-          class="btn-pill"
+          class="btn-location"
         >
           Посмотреть на карте
         </a>
       </div>
+
+      <img
+        class="location-line"
+        src="assets/icons/line_location.png"
+        alt=""
+        aria-hidden="true"
+      />
     </div>
   </section>
 
   <!-- ===== PROGRAM ===== -->
   <section id="program">
     <div class="container">
-      <p class="program-label reveal">План нашего дня</p>
-      <h2 class="program-title reveal">Программа</h2>
+      <div class="program-header reveal">
+        <div class="program-title-wrap">
+          <p class="program-label">План нашего дня</p>
+          <h2 class="program-title">Программа</h2>
+        </div>
+      </div>
 
       <ul class="program-list">
         <li class="program-item reveal reveal-delay-1">
-          <span class="program-time">14:00</span>
-          <span class="program-event">Фуршет</span>
-          <span class="program-detail">и встреча гостей</span>
+          <div class="program-text">
+            <span class="program-time">14:00</span>
+            <span class="program-event">Приветственный фуршет</span>
+          </div>
+          <img class="program-icon" src="assets/icons/program_first.png" alt="" aria-hidden="true" />
         </li>
-        <li class="program-item reveal reveal-delay-2">
-          <span class="program-time">15:00</span>
-          <span class="program-event">Церемония</span>
+
+        <li class="program-item program-item--reverse reveal reveal-delay-2">
+          <div class="program-text">
+            <span class="program-time">15:00</span>
+            <span class="program-event">Торжественная церемония</span>
+          </div>
+          <img class="program-icon" src="assets/icons/program_second.png" alt="" aria-hidden="true" />
         </li>
+
         <li class="program-item reveal reveal-delay-3">
-          <span class="program-time">16:00</span>
-          <span class="program-event">Праздничный ужин</span>
-          <span class="program-detail">танцы, поздравления и вкусная еда</span>
+          <div class="program-text">
+            <span class="program-time">16:00</span>
+            <span class="program-event">Праздничный ужин</span>
+            <span class="program-detail">время танцев, поздравлений<br>и вкусной еды</span>
+          </div>
+          <img class="program-icon" src="assets/icons/program_third.png" alt="" aria-hidden="true" />
         </li>
-        <li class="program-item reveal reveal-delay-4">
-          <span class="program-time">22:00</span>
-          <span class="program-event">Завершение вечера</span>
+
+        <li class="program-item program-item--reverse reveal reveal-delay-4">
+          <div class="program-text">
+            <span class="program-time">22:00</span>
+            <span class="program-event">Окончание праздника</span>
+          </div>
+          <img class="program-icon" src="assets/icons/program_fourth.png" alt="" aria-hidden="true" />
         </li>
       </ul>
     </div>
   </section>
 
-  <!-- ===== TRANSFER ===== -->
-  <section id="transfer">
-    <div class="container">
-      <div class="transfer-inner reveal">
-        <h3 class="transfer-title">Трансфер</h3>
-        <div class="transfer-rows">
-          <div class="transfer-row">
-            <span class="transfer-icon">🚌</span>
-            <span class="transfer-text">
-              <strong>Туда:</strong> автобус от ст.м. Беговая в 12:45
-            </span>
-          </div>
-          <div class="transfer-row">
-            <span class="transfer-icon">🌙</span>
-            <span class="transfer-text">
-              <strong>Обратно:</strong> автобус после окончания вечера
-            </span>
-          </div>
-        </div>
+  <!-- ===== INSTAX PHOTO (wave transition) ===== -->
+  <section class="instax-bridge">
+    <div class="instax-bridge__content">
+      <div class="wave instax-bridge__wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#8C2B36" fill-opacity="1" d="M0,96L26.7,96C53.3,96,107,96,160,85.3C213.3,75,267,53,320,69.3C373.3,85,427,139,480,149.3C533.3,160,587,128,640,144C693.3,160,747,224,800,256C853.3,288,907,288,960,272C1013.3,256,1067,224,1120,192C1173.3,160,1227,128,1280,112C1333.3,96,1387,96,1413,96L1440,96L1440,0L1413.3,0C1386.7,0,1333,0,1280,0C1226.7,0,1173,0,1120,0C1066.7,0,1013,0,960,0C906.7,0,853,0,800,0C746.7,0,693,0,640,0C586.7,0,533,0,480,0C426.7,0,373,0,320,0C266.7,0,213,0,160,0C106.7,0,53,0,27,0L0,0Z"></path>
+
+</svg>
       </div>
+      <img
+        class="instax-photo reveal"
+        src="assets/icons/photo_instax.png"
+        alt="Соня и Серёжа"
+        loading="lazy"
+      />
     </div>
   </section>
-
-  <!-- Wave bordeaux → cream -->
-  <div class="wave" aria-hidden="true" style="background:#6E1422;">
-    <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,45 C360,0 1080,90 1440,35 L1440,0 L0,0 Z" fill="#F6E3B5"/>
-    </svg>
-  </div>
 
   <!-- ===== DRESSCODE ===== -->
   <section id="dresscode" style="background:var(--cream);">
