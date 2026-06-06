@@ -84,7 +84,21 @@ function initScrollReveal() {
 
 /* ===== COUNTDOWN ===== */
 
+function pluralRu(n, one, few, many) {
+  const mod100 = n % 100;
+  const mod10 = mod100 % 10;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+  return many;
+}
+
+function setCountdownLabel(numEl, value, one, few, many) {
+  const labelEl = numEl?.nextElementSibling;
+  if (labelEl) labelEl.textContent = pluralRu(value, one, few, many);
+}
+
 function updateCountdown() {
+  // 6 сентября 2026, 14:00 по Москве (UTC+3)
   const target = new Date('2026-09-06T14:00:00+03:00').getTime();
   const now = Date.now();
   const diff = target - now;
@@ -99,6 +113,10 @@ function updateCountdown() {
     if (hoursEl)   hoursEl.textContent   = '0';
     if (minutesEl) minutesEl.textContent = '0';
     if (secondsEl) secondsEl.textContent = '0';
+    setCountdownLabel(daysEl,    0, 'день',   'дня',   'дней');
+    setCountdownLabel(hoursEl,   0, 'час',    'часа',  'часов');
+    setCountdownLabel(minutesEl, 0, 'минута', 'минуты','минут');
+    setCountdownLabel(secondsEl, 0, 'секунда','секунды','секунд');
     return;
   }
 
@@ -111,6 +129,11 @@ function updateCountdown() {
   if (hoursEl)   hoursEl.textContent   = String(hours).padStart(2, '0');
   if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
   if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+
+  setCountdownLabel(daysEl,    days,    'день',   'дня',   'дней');
+  setCountdownLabel(hoursEl,   hours,   'час',    'часа',  'часов');
+  setCountdownLabel(minutesEl, minutes, 'минута', 'минуты','минут');
+  setCountdownLabel(secondsEl, seconds, 'секунда','секунды','секунд');
 }
 
 function initCountdown() {
@@ -154,18 +177,22 @@ function initForm() {
   form.addEventListener('submit', async e => {
     e.preventDefault();
 
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
     // URLSearchParams → sends as application/x-www-form-urlencoded
     // which is the only format Google Apps Script's e.parameter can parse
     const params = new URLSearchParams({
       guest_code:    currentGuestCode,
       name:          document.getElementById('name').value.trim(),
       attending:     getRadioValue('attending'),
-      bus:           getRadioValue('bus'),
       alcohol:       collectCheckboxValues('alcohol'),
       allergies:     document.getElementById('allergies').value.trim(),
-      accommodation: getRadioValue('accommodation'),
-      message:       (document.getElementById('message') || {}).value || '',
-      comment:       document.getElementById('comment').value.trim(),
+      bus_to:        getRadioValue('bus_to'),
+      bus_back:      getRadioValue('bus_back'),
+      wishes:        document.getElementById('wishes-field').value.trim(),
       submitted_at:  new Date().toISOString(),
     });
 
