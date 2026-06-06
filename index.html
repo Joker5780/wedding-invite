@@ -14,15 +14,26 @@
 
   <!-- ===== HERO ===== -->
   <section id="hero">
-    <span class="hero-heart-icon">♥</span>
 
-    <h1 class="hero-names">
-      СОНЯ<br>И СЕРЁЖА
-    </h1>
+    <img class="hero-heart-icon" src="assets/icons/top_heart.svg" alt="" aria-hidden="true" />
 
-    <div class="hero-photos reveal">
-      <img class="hero-photo" src="assets/couple/IMG_0752.jpg"  alt="Соня и Серёжа" loading="eager" />
-      <img class="hero-photo" src="assets/couple/IMG_2241.jpg" alt="Соня и Серёжа" loading="eager" />
+    <h1 class="hero-names">СОНЯ И СЕРЁЖА</h1>
+
+    <div class="hero-photos-wrapper reveal">
+      <div class="hero-photos-row">
+        <p class="hero-caption-top">— интересно, кто будет<br>моей женой?</p>
+
+        <div class="hero-photo-wrap hero-photo-wrap--left">
+          <img class="hero-photo" src="assets/couple/main_left.jpg" alt="Серёжа в детстве" loading="eager" />
+        </div>
+
+        <div class="hero-photo-wrap hero-photo-wrap--right">
+          <img class="hero-rings-icon" src="assets/icons/rings_on_right_corner.png" alt="" aria-hidden="true" />
+          <img class="hero-photo" src="assets/couple/main_right.jpg" alt="Соня в детстве" loading="eager" />
+        </div>
+
+        <p class="hero-caption-bottom">— ей буду я!</p>
+      </div>
     </div>
 
     <div class="hero-date-block reveal">
@@ -31,21 +42,29 @@
       <p class="hero-post">Потому что мы женимся!</p>
     </div>
 
-    <!-- Wavy line decoration -->
-    <svg viewBox="0 0 400 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;margin:0 auto;display:block;color:#6E1422;opacity:0.45;" aria-hidden="true">
-      <path d="M10 40 Q80 10 150 35 Q220 55 290 25 Q340 10 390 30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
-    </svg>
+    <img class="hero-line" src="assets/icons/line_after_main_section.png" alt="" aria-hidden="true" />
+
   </section>
 
-  <!-- Wave: cream → cream (greeting) -->
-  <section id="greeting" style="background:var(--cream);padding:3rem 1.5rem 4rem;">
+  <!-- ===== GREETING ===== -->
+  <section id="greeting">
     <div class="greeting-card reveal">
-      <h2 class="greeting-name" id="greeting-text">Дорогие друзья и родные</h2>
+      <img class="greeting-letter" src="assets/icons/letter_greeting.png" alt="" aria-hidden="true" />
+
+      <h2 class="greeting-name" id="greeting-text">Дорогие друзья и родные!</h2>
+
+      <p class="greeting-intro">
+        Скоро состоится очень важное<br>
+        и радостное для нас событие —
+      </p>
+
+      <p class="greeting-accent">наша свадьба!</p>
+
       <p class="greeting-body">
-        Скоро состоится очень важное и радостное для нас событие —
-        <em>наша свадьба!</em><br><br>
-        Этот день невозможно представить без самых близких для нас людей,
-        мы бы очень хотели, чтобы вы провели его <strong>вместе с нами!</strong>
+        Этот день невозможно представить без<br>
+        самых близких для нас людей, мы бы<br>
+        очень хотели, чтобы вы провели его<br>
+        <span class="greeting-closer">вместе с нами!</span>
       </p>
     </div>
   </section>
@@ -55,43 +74,38 @@
     <div class="container">
       <h2 class="cal-month reveal">Сентябрь, 2026</h2>
 
-      <!-- Week containing Sep 6 (Sun): Mon Aug 31 → Sun Sep 6 -->
+      <!-- Two-row grid: row 1 = day names, row 2 = numbers -->
       <div class="cal-week reveal">
-        <div class="cal-day">
-          <span class="cal-day-name">Пн</span>
-          <span class="cal-day-num">31</span>
-        </div>
-        <div class="cal-day">
-          <span class="cal-day-name">Вт</span>
-          <span class="cal-day-num">1</span>
-        </div>
-        <div class="cal-day">
-          <span class="cal-day-name">Ср</span>
-          <span class="cal-day-num">2</span>
-        </div>
-        <div class="cal-day">
-          <span class="cal-day-name">Чт</span>
-          <span class="cal-day-num">3</span>
-        </div>
-        <div class="cal-day">
-          <span class="cal-day-name">Пт</span>
-          <span class="cal-day-num">4</span>
-        </div>
-        <div class="cal-day weekend">
-          <span class="cal-day-name">Сб</span>
-          <span class="cal-day-num">5</span>
-        </div>
-        <!-- Wedding day: Sunday Sep 6 -->
-        <div class="cal-day wedding">
-          <span class="cal-day-name">Вс</span>
-          <div class="cal-heart-bg">
-            <svg class="cal-heart-svg" viewBox="0 0 80 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M40 66 C40 66 6 44 6 22 C6 11 14 4 24 4 C31 4 37 8 40 14 C43 8 49 4 56 4 C66 4 74 11 74 22 C74 44 40 66 40 66Z" fill="#6E1422"/>
-            </svg>
-            <span class="cal-heart-num">6</span>
-          </div>
+        <!-- Day names row -->
+        <span class="cal-day-name">Пн</span>
+        <span class="cal-day-name">Вт</span>
+        <span class="cal-day-name">Ср</span>
+        <span class="cal-day-name">Чт</span>
+        <span class="cal-day-name">Пт</span>
+        <span class="cal-day-name">Сб</span>
+        <span class="cal-day-name wedding">Вс</span>
+
+        <!-- Numbers row -->
+        <span class="cal-day-num cal-other-month">31</span>
+        <span class="cal-day-num">1</span>
+        <span class="cal-day-num">2</span>
+        <span class="cal-day-num">3</span>
+        <span class="cal-day-num">4</span>
+        <span class="cal-day-num">5</span>
+
+        <!-- Wedding day with heart -->
+        <div class="cal-heart-bg">
+          <img class="cal-heart-svg" src="assets/icons/calendar_heart.svg" alt="" aria-hidden="true" />
+          <span class="cal-heart-num">6</span>
         </div>
       </div>
+
+      <img
+        class="cal-bottom-icon reveal"
+        src="assets/icons/icon_on_bottom_calendar.png"
+        alt=""
+        aria-hidden="true"
+      />
     </div>
   </section>
 
@@ -184,7 +198,7 @@
   <!-- Wave bordeaux → cream -->
   <div class="wave" aria-hidden="true" style="background:#6E1422;">
     <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,45 C360,0 1080,90 1440,35 L1440,0 L0,0 Z" fill="#FBEFDD"/>
+      <path d="M0,45 C360,0 1080,90 1440,35 L1440,0 L0,0 Z" fill="#F6E3B5"/>
     </svg>
   </div>
 
@@ -203,7 +217,7 @@
         <div class="swatch" style="background:#6E1422;"></div>
         <div class="swatch" style="background:#E9CDD0;"></div>
         <div class="swatch" style="background:#C4A882;"></div>
-        <div class="swatch" style="background:#FBEFDD; border:1.5px solid #e0c9a8;"></div>
+        <div class="swatch" style="background:#F6E3B5; border:1.5px solid #e0c9a8;"></div>
       </div>
 
       <p class="dresscode-hint reveal">Для вдохновения мы собрали немного картинок-примеров, листайте вправо</p>
@@ -299,7 +313,7 @@
   <!-- Wave bordeaux → cream -->
   <div class="wave" aria-hidden="true" style="background:#6E1422;">
     <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,55 C480,90 960,0 1440,50 L1440,0 L0,0 Z" fill="#FBEFDD"/>
+      <path d="M0,55 C480,90 960,0 1440,50 L1440,0 L0,0 Z" fill="#F6E3B5"/>
     </svg>
   </div>
 
@@ -459,7 +473,7 @@
   <!-- Wave rose → cream -->
   <div class="wave" aria-hidden="true" style="background:var(--rose);">
     <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,50 C480,0 960,90 1440,40 L1440,0 L0,0 Z" fill="#FBEFDD"/>
+      <path d="M0,50 C480,0 960,90 1440,40 L1440,0 L0,0 Z" fill="#F6E3B5"/>
     </svg>
   </div>
 

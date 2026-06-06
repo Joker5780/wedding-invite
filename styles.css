@@ -1,13 +1,32 @@
+/* ===== FONTS ===== */
+@font-face {
+  font-family: 'TildaSans';
+  src: url('assets/fonts/TildaSans-VF.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sacramento';
+  src: url('assets/fonts/Sacramento.woff2') format('woff2'),
+       url('assets/fonts/Sacramento.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --bordeaux: #6E1422;
   --bordeaux-dark: #4a0d17;
-  --cream: #FBEFDD;
-  --cream-dark: #f5e3c8;
+  --cream: #F6E3B5;
+  --cream-dark: #efd89e;
   --rose: #E9CDD0;
   --rose-mid: #ddb8bd;
+  --pink: #EBBDB1;
   --text: #2a1a1e;
   --text-muted: #8a6a6e;
   --white: #fff;
@@ -15,6 +34,10 @@
   --font-serif: 'Cormorant Garamond', serif;
   --font-hand: 'Caveat', cursive;
   --font-body: 'Inter', sans-serif;
+  --font-tilda: 'TildaSans', 'Inter', sans-serif;
+  --font-sacramento: 'Sacramento', cursive;
+
+  --dark: #3A0D14;
 }
 
 html { scroll-behavior: smooth; }
@@ -82,188 +105,282 @@ a { color: inherit; text-decoration: none; }
 #hero {
   background: var(--cream);
   text-align: center;
-  padding: 3rem 1.5rem 0;
+  padding: 2.5rem 1.5rem 0;
+  color: var(--dark);
 }
 
 .hero-heart-icon {
-  font-size: 1.6rem;
-  color: var(--bordeaux);
   display: block;
-  margin: 0 auto 0.8rem;
-  animation: heartbeat 1.8s ease-in-out infinite;
+  width: clamp(26px, 5vw, 40px);
+  margin: 0 auto 2.5rem;
 }
 
 .hero-names {
-  font-family: var(--font-serif);
-  font-size: clamp(3.5rem, 13vw, 6.5rem);
+  font-family: var(--font-tilda);
+  font-size: clamp(1.8rem, 7vw, 3rem);
   font-weight: 700;
-  color: var(--bordeaux);
-  letter-spacing: 0.04em;
-  line-height: 1.05;
-  margin-bottom: 0.5rem;
+  color: var(--dark);
+  line-height: 1.1;
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
 }
 
-.hero-photos {
+/* Photos grid with captions */
+.hero-photos-wrapper {
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+}
+
+.hero-caption-top {
+  font-family: var(--font-sacramento);
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
+  color: var(--dark);
+  text-align: center;
+  grid-column: 1;
+  grid-row: 1;
+  line-height: 1;
+}
+
+.hero-photos-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-  margin: 1.6rem auto;
-  max-width: 480px;
+  column-gap: 2px;
+  row-gap: 0.5rem;
+}
+
+.hero-photo-wrap--left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.hero-photo-wrap--right {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.hero-photo-wrap {
+  position: relative;
 }
 
 .hero-photo {
+  display: block;
   width: 100%;
   aspect-ratio: 3/4;
   object-fit: cover;
   filter: grayscale(100%);
-  border-radius: 4px;
+  border-radius: 0;
 }
 
-.hero-photo:first-child { border-radius: 4px 100px 4px 4px; }
-.hero-photo:last-child  { border-radius: 100px 4px 4px 4px; }
+.hero-rings-icon {
+  position: absolute;
+  top: -38px;
+  right: -22px;
+  width: clamp(44px, 11vw, 64px);
+  z-index: 2;
+}
+
+.hero-caption-bottom {
+  font-family: var(--font-sacramento);
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
+  color: var(--dark);
+  text-align: center;
+  grid-column: 2;
+  grid-row: 3;
+  line-height: 1;
+}
 
 .hero-date-block {
   padding: 0 1rem 2.5rem;
 }
 
 .hero-pre {
-  font-family: var(--font-serif);
-  font-size: clamp(1rem, 3vw, 1.2rem);
-  color: var(--text-muted);
-  font-style: italic;
+  font-family: var(--font-tilda);
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  font-weight: 400;
+  color: var(--dark);
 }
 
 .hero-date {
-  font-family: var(--font-serif);
-  font-size: clamp(3rem, 12vw, 5.5rem);
-  font-weight: 700;
-  color: var(--bordeaux);
+  font-family: var(--font-tilda);
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 600;
+  color: var(--dark);
   line-height: 1.1;
 }
 
 .hero-post {
-  font-family: var(--font-serif);
-  font-size: clamp(1rem, 3vw, 1.25rem);
-  color: var(--bordeaux);
-  font-style: italic;
+  font-family: var(--font-tilda);
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  font-weight: 400;
+  color: var(--dark);
+}
+
+.hero-line {
+  display: block;
+  width: clamp(180px, 55vw, 320px);
+  margin: 0 auto;
 }
 
 /* ===== GREETING ===== */
 #greeting {
   background: var(--cream);
-  padding: 3rem 1.5rem 4rem;
+  padding: 4rem 1.5rem 0rem;
 }
 
 .greeting-card {
-  background: var(--rose);
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
+  position: relative;
+  background: var(--pink);
+  border-radius: 16px;
+  padding: 3.5rem 2rem 3.5rem;
   text-align: center;
   max-width: 540px;
   margin: 0 auto;
+  overflow: hidden;
+}
+
+.greeting-letter {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 2rem;
+  width: clamp(40px, 24vw, 64px);
+  pointer-events: none;
 }
 
 .greeting-name {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 7vw, 3rem);
-  color: var(--bordeaux);
+  font-family: var(--font-tilda);
+  font-size: clamp(1.6rem, 5.5vw, 2.2rem);
   font-weight: 700;
-  margin-bottom: 1rem;
+  color: var(--dark);
+  margin-bottom: 1.2rem;
   line-height: 1.2;
 }
 
+.greeting-intro {
+  font-family: var(--font-tilda);
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+  font-weight: 400;
+  color: var(--dark);
+  line-height: 1.5;
+}
+
+.greeting-accent {
+  font-family: var(--font-sacramento);
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  color: var(--dark);
+  line-height: 1;
+  margin-bottom: 1.2rem;
+}
+
 .greeting-body {
-  font-size: 1rem;
-  color: var(--bordeaux);
-  line-height: 1.7;
+  font-family: var(--font-tilda);
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+  font-weight: 400;
+  color: var(--dark);
+  line-height: 1.5;
 }
 
-.greeting-body em {
-  font-family: var(--font-hand);
-  font-style: normal;
-  font-size: 1.3em;
+.greeting-closer {
+  font-weight: 500;
 }
-
-.greeting-body strong { font-weight: 700; }
 
 /* ===== CALENDAR ===== */
 #calendar {
   background: var(--cream);
-  padding: 4rem 1.5rem;
+  padding: 3rem 1.5rem;
   text-align: center;
+  overflow: visible;
 }
 
 .cal-month {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 7vw, 3rem);
-  color: var(--bordeaux);
-  margin-bottom: 2rem;
+  font-family: var(--font-tilda);
+  font-size: clamp(1.6rem, 6vw, 2.6rem);
+  font-weight: 700;
+  color: #8C2B36;
+  margin-bottom: 1rem;
 }
 
+/* Grid: 7 columns, 2 rows — day names on top, numbers below */
 .cal-week {
-  display: flex;
-  justify-content: center;
-  gap: clamp(0.6rem, 3vw, 1.4rem);
+  --cal-col: clamp(36px, 9vw, 46px);
+  display: grid;
+  grid-template-columns: repeat(7, var(--cal-col));
+  column-gap: clamp(0.65rem, 3.5vw, 1.1rem);
+  row-gap: 0.25rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
   align-items: center;
 }
 
-.cal-day {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
+.cal-week > * {
+  overflow: visible;
 }
 
+/* Day name cells — all in row 1, perfectly aligned */
 .cal-day-name {
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-family: var(--font-tilda);
+  font-size: clamp(0.75rem, 2.5vw, 1rem);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
+  color: #8C2B36;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
 }
 
-.cal-day-num {
-  font-family: var(--font-serif);
-  font-size: clamp(1.4rem, 5vw, 2.2rem);
-  color: var(--text);
-  font-weight: 400;
-  line-height: 1;
-  padding: 0.2rem 0;
-}
-
-.cal-day.weekend .cal-day-num { color: var(--bordeaux); }
-
-.cal-day.wedding .cal-day-num {
-  position: relative;
-  z-index: 1;
-  color: var(--cream);
+.cal-day-name.wedding {
   font-weight: 700;
 }
 
-.cal-heart-bg {
-  position: relative;
+.cal-other-month {
+  opacity: 0.5;
+}
+
+/* Number cells — all in row 2, perfectly aligned */
+.cal-day-num {
+  font-family: var(--font-tilda);
+  font-size: clamp(1.3rem, 4.5vw, 2rem);
+  font-weight: 400;
+  color: #8C2B36;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(44px, 12vw, 64px);
-  height: clamp(40px, 11vw, 60px);
+  min-height: 2.5rem;
+}
+
+/* Wedding day heart cell — sits in row 2, col 7 */
+.cal-heart-bg {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 55 / 56;
+  overflow: visible;
 }
 
 .cal-heart-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  grid-area: 1 / 1;
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
   animation: heartbeat 1.8s ease-in-out infinite;
 }
 
 .cal-heart-num {
+  grid-area: 1 / 1;
   position: relative;
   z-index: 1;
-  font-family: var(--font-serif);
-  font-size: clamp(1.4rem, 5vw, 2.2rem);
-  color: var(--cream);
-  font-weight: 700;
+  font-family: var(--font-tilda);
+  font-size: clamp(1.3rem, 4.5vw, 2rem);
+  font-weight: 600;
+  color: #F6E3B5;
+  line-height: 1;
+}
+
+.cal-bottom-icon {
+  display: block;
+  width: clamp(100px, 50vw, 220px);
+  margin: 0rem auto 0;
 }
 
 /* ===== WAVE → BORDEAUX ===== */
@@ -801,5 +918,6 @@ footer {
     align-items: center;
     text-align: center;
   }
-  .cal-week { gap: 0.4rem; }
+  .cal-week { column-gap: 0.55rem; }
+}
 }
