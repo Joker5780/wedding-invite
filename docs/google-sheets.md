@@ -4,46 +4,124 @@
 
 1. Открой [Google Таблицы](https://sheets.google.com) и создай новую таблицу.
 2. Назови её **«Свадьба — анкета»**.
-3. В первой строке создай заголовки колонок (заполни вручную):
 
-| A | B | C | D | E | F | G | H | I | J |
-|---|---|---|---|---|---|---|---|---|---|
-| Имена | Придёт? | Алкоголь | Аллергии | Трансфер туда | Трансфер обратно | Пожелания | Код гостя | Дата |
+Заголовки колонок скрипт создаст автоматически при первом ответе. Если хочешь задать их вручную, используй такой порядок:
 
-(Можно просто написать их в ячейках A1, B1 … I1)
+| A | B | C | D | E | F | G | H | I |
+|---|---|---|---|---|---|---|---|---|
+| Дата | Код гостя | Имена | Вы придёте? | Алкоголь | Аллергии | Трансфер туда | Трансфер обратно | Пожелания |
 
 ---
 
 ## Шаг 2. Вставить Apps Script
 
 1. В таблице выбери меню: **Расширения → Apps Script**.
-2. Удали весь код в редакторе и вставь следующий:
+2. Удали весь код в редакторе и вставь содержимое файла [`form-apps-script.js`](./form-apps-script.js)  
+   (или скопируй код ниже).
+3. Сохрани: **Ctrl+S** (или **Cmd+S**).
 
 ```javascript
+var SHEET_NAME = 'Ответы';
+
+var HEADERS = [
+  'Дата',
+  'Код гостя',
+  'Имена',
+  'Вы придёте?',
+  'Алкоголь',
+  'Аллергии',
+  'Трансфер туда',
+  'Трансфер обратно',
+  'Пожелания',
+];
+
 function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  try {
+    var sheet = getSheet_();
+    var data = (e && e.parameter) ? e.parameter : {};
 
-  var data = e.parameter;
+    sheet.appendRow([
+      formatDate_(data.submitted_at),
+      data.guest_code || '',
+      data.name || '',
+      data.attending || '',
+      data.alcohol || '',
+      data.allergies || '',
+      data.bus_to || '',
+      data.bus_back || '',
+      data.wishes || '',
+    ]);
 
-  sheet.appendRow([
-    data.name          || '',
-    data.attending     || '',
-    data.alcohol       || '',
-    data.allergies     || '',
-    data.bus_to        || '',
-    data.bus_back      || '',
-    data.wishes        || '',
-    data.guest_code    || '',
-    data.submitted_at  || new Date().toISOString()
-  ]);
+    return jsonResponse_({ result: 'ok' });
+  } catch (err) {
+    return jsonResponse_({ result: 'error', message: String(err) });
+  }
+}
 
+function doGet() {
+  return jsonResponse_({ status: 'ok', message: 'Wedding RSVP endpoint is running' });
+}
+
+function getSheet_() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(SHEET_NAME);
+
+  if (!sheet) {
+    sheet = ss.insertSheet(SHEET_NAME);
+  }
+
+  ensureHeaders_(sheet);
+  return sheet;
+}
+
+function ensureHeaders_(sheet) {
+  var firstRow = sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
+  var hasHeaders = firstRow.some(function (cell) {
+    return String(cell).trim() !== '';
+  });
+
+  if (!hasHeaders) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    sheet.setFrozenRows(1);
+    sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
+  }
+}
+
+function formatDate_(isoString) {
+  if (!isoString) {
+    return Utilities.formatDate(new Date(), 'Europe/Moscow', 'dd.MM.yyyy HH:mm:ss');
+  }
+
+  var date = new Date(isoString);
+  if (isNaN(date.getTime())) {
+    return isoString;
+  }
+
+  return Utilities.formatDate(date, 'Europe/Moscow', 'dd.MM.yyyy HH:mm:ss');
+}
+
+function jsonResponse_(payload) {
   return ContentService
-    .createTextOutput(JSON.stringify({ result: 'ok' }))
+    .createTextOutput(JSON.stringify(payload))
     .setMimeType(ContentService.MimeType.JSON);
 }
 ```
 
-3. Сохрани: **Ctrl+S** (или **Cmd+S**).
+---
+
+## Соответствие полей анкеты
+
+| Поле в таблице | Параметр из формы | Вопрос на сайте |
+|---|---|---|
+| Дата | `submitted_at` | время отправки |
+| Код гостя | `guest_code` | код из ссылки `?g=...` |
+| Имена | `name` | Ваши имена * |
+| Вы придёте? | `attending` | `конечно, да` / `к сожалению, нет` |
+| Алкоголь | `alcohol` | несколько значений через запятую |
+| Аллергии | `allergies` | Аллергии или пищевые ограничения |
+| Трансфер туда | `bus_to` | `да` / `нет` / `сообщим позже` |
+| Трансфер обратно | `bus_back` | вечером / утром / `нет` / `сообщим позже` |
+| Пожелания | `wishes` | свободный текст |
 
 ---
 
@@ -75,21 +153,29 @@ function doPost(e) {
 
 ## Шаг 5. Проверить
 
-1. Открой сайт локально (`index.html`).
+1. Запусти сайт через локальный сервер (`python3 -m http.server 8000`) — иначе `config.json` не загрузится.
 2. Заполни анкету и нажми «Отправить».
-3. Открой Google Таблицу — должна появиться новая строка с данными.
+3. Открой Google Таблицу — на листе **«Ответы»** должна появиться новая строка.
+
+Проверка endpoint в браузере: открой URL скрипта — должен вернуться JSON  
+`{"status":"ok","message":"Wedding RSVP endpoint is running"}`.
 
 ---
 
 ## Просмотр ответов
 
-- Каждый новый ответ — новая строка в таблице.
-- Для подсчёта «да»/«нет» используй формулу: `=COUNTIF(B:B,"да")`
-- Для фильтрации: **Данные → Создать фильтр**.
-- Экспорт в Excel: **Файл → Скачать → Microsoft Excel (.xlsx)**.
+- Каждый новый ответ — новая строка на листе **«Ответы»**.
+- Подсчёт подтвердивших: `=COUNTIF(D:D,"конечно, да")`
+- Подсчёт отказов: `=COUNTIF(D:D,"к сожалению, нет")`
+- Фильтр: **Данные → Создать фильтр**.
+- Экспорт: **Файл → Скачать → Microsoft Excel (.xlsx)**.
 
 ---
 
 ## Обновление скрипта
 
-Если изменишь поля анкеты — также добавь новый `appendRow` аргумент и задеплой заново (**Развернуть → Управление развёртываниями → ✏️ Редактировать → сохрани как новую версию**).
+Если изменишь поля анкеты:
+
+1. Обнови `HEADERS` и `appendRow` в Apps Script.
+2. Обнови отправку в `app.js`.
+3. Задеплой заново: **Развернуть → Управление развёртываниями → ✏️ Редактировать → сохрани как новую версию**.
