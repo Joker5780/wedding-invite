@@ -1102,6 +1102,18 @@ a { color: inherit; text-decoration: none; }
   color: #8C2B36;
 }
 
+.btn-submit:disabled,
+.btn-submit.is-submitting {
+  opacity: 0.75;
+  cursor: wait;
+}
+
+.btn-submit:disabled:hover,
+.btn-submit.is-submitting:hover {
+  background: #8C2B36;
+  color: #F6E3B5;
+}
+
 /* Thank you */
 #thank-you { display: none; text-align: center; padding: 2rem 0; font-family: var(--font-tilda); }
 #thank-you.visible { display: block; }

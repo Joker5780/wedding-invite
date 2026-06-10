@@ -169,21 +169,53 @@ function getRadioValue(name) {
   return el ? el.value : '';
 }
 
+function showThankYou(form, thankYou) {
+  form.style.display = 'none';
+  if (thankYou) thankYou.classList.add('visible');
+  thankYou.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function sendFormInBackground(params) {
+  if (!formEndpoint) {
+    console.info('No formEndpoint — данные (для отладки):', Object.fromEntries(params));
+    return;
+  }
+
+  fetch(formEndpoint, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString(),
+  }).catch(err => {
+    console.warn('Form submit error:', err);
+  });
+}
+
 function initForm() {
   const form = document.getElementById('rsvp-form');
   const thankYou = document.getElementById('thank-you');
+  const submitBtn = form?.querySelector('.btn-submit');
   if (!form) return;
 
-  form.addEventListener('submit', async e => {
+  let isSubmitting = false;
+
+  form.addEventListener('submit', e => {
     e.preventDefault();
+
+    if (isSubmitting) return;
 
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    // URLSearchParams → sends as application/x-www-form-urlencoded
-    // which is the only format Google Apps Script's e.parameter can parse
+    isSubmitting = true;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Отправляем...';
+      submitBtn.classList.add('is-submitting');
+    }
+
     const params = new URLSearchParams({
       guest_code:    currentGuestCode,
       name:          document.getElementById('name').value.trim(),
@@ -196,24 +228,8 @@ function initForm() {
       submitted_at:  new Date().toISOString(),
     });
 
-    if (formEndpoint) {
-      try {
-        await fetch(formEndpoint, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: params.toString(),
-        });
-      } catch (err) {
-        console.warn('Form submit error:', err);
-      }
-    } else {
-      console.info('No formEndpoint — данные (для отладки):', Object.fromEntries(params));
-    }
-
-    form.style.display = 'none';
-    if (thankYou) thankYou.classList.add('visible');
-    thankYou.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    showThankYou(form, thankYou);
+    sendFormInBackground(params);
   });
 }
 
