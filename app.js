@@ -66,20 +66,79 @@ function startHearts() {
 
 /* ===== SCROLL REVEAL ===== */
 
-function initScrollReveal() {
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
+const REVEAL_STAGGER_MS = 100;
+const REVEAL_SCROLL_IN = 0.22; // доля высоты экрана — нужно проскроллить глубже
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+function getRevealOffsetPx() {
+  return Math.round(window.innerHeight * REVEAL_SCROLL_IN);
+}
+
+function isInViewport(el) {
+  const offset = getRevealOffsetPx();
+  const rect = el.getBoundingClientRect();
+  return rect.top < window.innerHeight - offset && rect.bottom > 0;
+}
+
+function activateReveal(el) {
+  el.classList.add('in-view');
+}
+
+function initScrollReveal() {
+  const reveals = document.querySelectorAll('.reveal');
+  const groups = document.querySelectorAll('.reveal-group');
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    reveals.forEach(activateReveal);
+    return;
+  }
+
+  groups.forEach(group => {
+    group.querySelectorAll('.reveal').forEach((el, index) => {
+      el.style.setProperty('--reveal-delay', index);
+    });
+  });
+
+  const revealRootMargin = `0px 0px -${getRevealOffsetPx()}px 0px`;
+
+  const observerOptions = {
+    threshold: 0,
+    rootMargin: revealRootMargin,
+  };
+
+  const itemObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      activateReveal(entry.target);
+      itemObserver.unobserve(entry.target);
+    });
+  }, observerOptions);
+
+  const groupObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const group = entry.target;
+      group.querySelectorAll('.reveal').forEach(activateReveal);
+      groupObserver.unobserve(group);
+    });
+  }, observerOptions);
+
+  groups.forEach(group => groupObserver.observe(group));
+
+  reveals.forEach(el => {
+    if (el.closest('.reveal-group')) return;
+    itemObserver.observe(el);
+  });
+
+  reveals.forEach(el => {
+    if (el.closest('.reveal-group')) return;
+    if (isInViewport(el)) activateReveal(el);
+  });
+
+  groups.forEach(group => {
+    if (isInViewport(group)) {
+      group.querySelectorAll('.reveal').forEach(activateReveal);
+    }
+  });
 }
 
 /* ===== COUNTDOWN ===== */
@@ -115,8 +174,8 @@ function updateCountdown() {
     if (secondsEl) secondsEl.textContent = '0';
     setCountdownLabel(daysEl,    0, 'день',   'дня',   'дней');
     setCountdownLabel(hoursEl,   0, 'час',    'часа',  'часов');
-    setCountdownLabel(minutesEl, 0, 'минута', 'минуты','минут');
-    setCountdownLabel(secondsEl, 0, 'секунда','секунды','секунд');
+    setCountdownLabel(minutesEl, 0, 'минуту', 'минуты','минут');
+    setCountdownLabel(secondsEl, 0, 'секунду','секунды','секунд');
     return;
   }
 
@@ -132,8 +191,8 @@ function updateCountdown() {
 
   setCountdownLabel(daysEl,    days,    'день',   'дня',   'дней');
   setCountdownLabel(hoursEl,   hours,   'час',    'часа',  'часов');
-  setCountdownLabel(minutesEl, minutes, 'минута', 'минуты','минут');
-  setCountdownLabel(secondsEl, seconds, 'секунда','секунды','секунд');
+  setCountdownLabel(minutesEl, minutes, 'минуту', 'минуты','минут');
+  setCountdownLabel(secondsEl, seconds, 'секунду','секунды','секунд');
 }
 
 function initCountdown() {
@@ -169,9 +228,27 @@ function getRadioValue(name) {
   return el ? el.value : '';
 }
 
-function showThankYou(form, thankYou) {
+const THANK_YOU_MESSAGES = {
+  'конечно, да': {
+    title: 'Спасибо! Ждём вас!',
+    body: 'Мы очень рады, что вы будете рядом в этот день',
+  },
+  'к сожалению, нет': {
+    title: 'Спасибо, что ответили!',
+    body: 'Нам очень жаль, что вы не сможете быть с нами в этот день. Сообщите, если что-то поменяется',
+  },
+};
+
+function showThankYou(form, thankYou, attending) {
   form.style.display = 'none';
-  if (thankYou) thankYou.classList.add('visible');
+  if (thankYou) {
+    const messages = THANK_YOU_MESSAGES[attending] || THANK_YOU_MESSAGES['конечно, да'];
+    const titleEl = thankYou.querySelector('.thank-you-title');
+    const bodyEl = thankYou.querySelector('.thank-you-body');
+    if (titleEl) titleEl.textContent = messages.title;
+    if (bodyEl) bodyEl.textContent = messages.body;
+    thankYou.classList.add('visible');
+  }
   thankYou.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
@@ -228,9 +305,45 @@ function initForm() {
       submitted_at:  new Date().toISOString(),
     });
 
-    showThankYou(form, thankYou);
+    showThankYou(form, thankYou, getRadioValue('attending'));
     sendFormInBackground(params);
   });
+}
+
+/* ===== DRESSCODE CAROUSEL ===== */
+
+function initDresscodeCarousel() {
+  const carousel = document.querySelector('.dresscode-carousel');
+  if (!carousel) return;
+
+  let isDragging = false;
+  let startX = 0;
+  let scrollLeft = 0;
+
+  carousel.addEventListener('mousedown', e => {
+    if (e.button !== 0) return;
+    isDragging = true;
+    carousel.classList.add('is-dragging');
+    startX = e.pageX;
+    scrollLeft = carousel.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+    carousel.classList.remove('is-dragging');
+  });
+
+  carousel.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    e.preventDefault();
+    carousel.scrollLeft = scrollLeft - (e.pageX - startX);
+  });
+
+  carousel.addEventListener('wheel', e => {
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    e.preventDefault();
+    carousel.scrollLeft += e.deltaY;
+  }, { passive: false });
 }
 
 /* ===== INIT ===== */
@@ -241,4 +354,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initCountdown();
   initForm();
+  initDresscodeCarousel();
 });

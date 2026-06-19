@@ -4,13 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Соня и Серёжа — 06.09.2026</title>
+  <meta name="theme-color" content="#8C2B36" />
   <meta name="description" content="Приглашение на свадьбу Сони и Серёжи — 6 сентября 2026, Ганинская ферма" />
+  <link rel="icon" href="assets/icons/top_heart.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Caveat:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="site">
+
+  <!-- Wave top → hero -->
+  <div class="wave wave--hero-top" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 224" preserveAspectRatio="none">
+      <path fill="#8C2B36" fill-opacity="1" d="M0,160L60,144C120,128,240,96,360,101.3C480,107,600,149,720,149.3C840,149,960,107,1080,112C1200,117,1320,171,1380,197.3L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
+    </svg>
+  </div>
 
   <!-- ===== HERO ===== -->
   <section id="hero">
@@ -36,13 +46,15 @@
       </div>
     </div>
 
-    <div class="hero-date-block reveal">
-      <p class="hero-pre">Ничего не планируйте на</p>
-      <p class="hero-date">06.09.2026</p>
-      <p class="hero-post">Потому что мы женимся!</p>
-    </div>
+    <div class="hero-date-wrap reveal">
+      <div class="hero-date-block">
+        <p class="hero-pre">Ничего не планируйте на</p>
+        <p class="hero-date">06.09.2026</p>
+        <p class="hero-post">Потому что мы женимся!</p>
+      </div>
 
-    <img class="hero-line" src="assets/icons/line_after_main_section.png" alt="" aria-hidden="true" />
+      <img class="hero-line" src="assets/icons/line_after_main_section.png" alt="" aria-hidden="true" />
+    </div>
 
   </section>
 
@@ -71,7 +83,7 @@
 
   <!-- ===== CALENDAR ===== -->
   <section id="calendar">
-    <div class="container">
+    <div class="container reveal-group">
       <h2 class="cal-month reveal">Сентябрь, 2026</h2>
 
       <!-- Two-row grid: row 1 = day names, row 2 = numbers -->
@@ -118,7 +130,7 @@
 
   <!-- ===== LOCATION ===== -->
   <section id="location">
-    <div class="container">
+    <div class="container reveal-group">
       <p class="location-label reveal">Место проведения</p>
       <h2 class="location-title reveal">Ганинская ферма</h2>
       <p class="location-address reveal">Фермерский проезд, 1<br>(Рощинское городское поселение)</p>
@@ -142,7 +154,7 @@
       </div>
 
       <img
-        class="location-line"
+        class="location-line reveal"
         src="assets/icons/line_location.png"
         alt=""
         aria-hidden="true"
@@ -152,7 +164,7 @@
 
   <!-- ===== PROGRAM ===== -->
   <section id="program">
-    <div class="container">
+    <div class="container reveal-group">
       <div class="program-header reveal">
         <div class="program-title-wrap">
           <p class="program-label">План нашего дня</p>
@@ -161,7 +173,7 @@
       </div>
 
       <ul class="program-list">
-        <li class="program-item reveal reveal-delay-1">
+        <li class="program-item reveal">
           <div class="program-text">
             <span class="program-time">14:00</span>
             <span class="program-event">Приветственный фуршет</span>
@@ -169,7 +181,7 @@
           <img class="program-icon" src="assets/icons/program_first.png" alt="" aria-hidden="true" />
         </li>
 
-        <li class="program-item program-item--reverse reveal reveal-delay-2">
+        <li class="program-item program-item--reverse reveal">
           <div class="program-text">
             <span class="program-time">15:00</span>
             <span class="program-event">Торжественная церемония</span>
@@ -177,7 +189,7 @@
           <img class="program-icon" src="assets/icons/program_second.png" alt="" aria-hidden="true" />
         </li>
 
-        <li class="program-item reveal reveal-delay-3">
+        <li class="program-item reveal">
           <div class="program-text">
             <span class="program-time">16:00</span>
             <span class="program-event">Праздничный ужин</span>
@@ -186,7 +198,7 @@
           <img class="program-icon" src="assets/icons/program_third.png" alt="" aria-hidden="true" />
         </li>
 
-        <li class="program-item program-item--reverse reveal reveal-delay-4">
+        <li class="program-item program-item--reverse reveal">
           <div class="program-text">
             <span class="program-time">22:00</span>
             <span class="program-event">Окончание праздника</span>
@@ -217,7 +229,7 @@
 
   <!-- ===== DRESSCODE ===== -->
   <section id="dresscode">
-    <div class="dresscode-inner">
+    <div class="dresscode-inner reveal-group">
       <img class="dresscode-top-icon reveal" src="assets/icons/dresscode-top.png" alt="" aria-hidden="true" />
 
       <h2 class="dresscode-title reveal">Дресс-код</h2>
@@ -230,7 +242,7 @@
       <div class="dresscode-circle-wrap reveal">
         <img class="dresscode-circle" src="assets/icons/circle_dresscode.svg" alt="" aria-hidden="true" />
         <p class="dresscode-p dresscode-p--circle">
-          Мы не ограничиваем вас в цветовой палитре, но с любовью просим
+          Мы не ограничиваем вас в цветовой палитре, но очень просим
           <strong>избегать слишком тёмных и чересчур ярких оттенков</strong>.
           Приветствуются пастельные тона. Девушек также просим воздержаться
           от выбора белого цвета
@@ -258,7 +270,7 @@
       <img class="dresscode-img" src="assets/dresscode/0469034b09c465345239971d23369d76.jpg" alt="Дресс-код" loading="lazy" />
     </div>
 
-    <div class="dresscode-footer">
+    <div class="dresscode-footer reveal-group">
       <a
         class="btn-dresscode-pinterest reveal"
         href="https://pin.it/2JDTP4u6Z"
@@ -275,7 +287,7 @@
   </section>
 
   <!-- Wave cream → wishes -->
-  <div class="wave wave--wishes-top" aria-hidden="true"">
+  <div class="wave wave--wishes-top" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
       <path fill="#646B30" fill-opacity="1" d="M0,160L40,154.7C80,149,160,139,240,117.3C320,96,400,64,480,58.7C560,53,640,75,720,106.7C800,139,880,181,960,165.3C1040,149,1120,75,1200,64C1280,53,1360,107,1400,133.3L1440,160L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
     </svg>
@@ -283,10 +295,10 @@
 
   <!-- ===== WISHES ===== -->
   <section id="wishes">
-    <div class="wishes-inner">
+    <div class="wishes-inner reveal-group">
       <h2 class="wishes-title reveal">Пожелания</h2>
 
-      <div class="wish-block reveal reveal-delay-1">
+      <div class="wish-block reveal">
         <p class="wish-label wish-label--left">Про подарки</p>
         <p class="wish-text">
           Если не знаете, что нам подарить, то вклад в семейный бюджет
@@ -294,7 +306,7 @@
         </p>
       </div>
 
-      <div class="wish-block reveal reveal-delay-2">
+      <div class="wish-block reveal">
         <p class="wish-label wish-label--right">Про цветы</p>
         <p class="wish-text">
           Мы просим не дарить нам букеты. Вместо этого вы можете подарить
@@ -304,7 +316,7 @@
         </p>
       </div>
 
-      <div class="wish-block reveal reveal-delay-3">
+      <div class="wish-block reveal">
         <p class="wish-label wish-label--left">Про ночёвку</p>
         <p class="wish-text conditional-block" data-show-for="friend">
           При желании вы можете арендовать шатёр в глэмпинге. Всю информацию
@@ -315,12 +327,12 @@
           остаться в них на ночь. Все подробности уточняйте у наших организаторов
         </p>
         <p class="wish-text conditional-block" data-show-for="default">
-          Для родных мы арендовали домики рядом с площадкой. При желании вы можете
-          остаться в них на ночь. Все подробности уточняйте у наших организаторов
+          При желании вы можете арендовать шатёр в глэмпинге. Всю информацию
+          уточняйте в отделе бронирования: +7 981-889-38-37 или у наших организаторов
         </p>
       </div>
 
-      <div class="wish-block reveal reveal-delay-4">
+      <div class="wish-block reveal">
         <p class="wish-label wish-label--right">Трансфер</p>
         <p class="wish-text">
           Не волнуйтесь о том, как добраться на наш праздник! Всех желающих
@@ -329,7 +341,7 @@
         </p>
       </div>
 
-      <div class="wish-block reveal reveal-delay-5">
+      <div class="wish-block reveal">
         <p class="wish-label wish-label--left">Для связи</p>
         <p class="wish-text">
           По любым вопросам вы можете обращаться к нашим организаторам:
@@ -347,59 +359,26 @@
     </div>
   </section>
 
-  <!-- Wave wishes → cream -->
-  <div class="wave wave--wishes-bottom" aria-hidden="true"">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+  <!-- Wave wishes → form (green → pink) -->
+  <div class="wave wave--wishes-form" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
       <path fill="#646B30" fill-opacity="1" d="M0,128L40,144C80,160,160,192,240,197.3C320,203,400,181,480,154.7C560,128,640,96,720,96C800,96,880,128,960,165.3C1040,203,1120,245,1200,261.3C1280,277,1360,267,1400,261.3L1440,256L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path>
     </svg>
-  </div>
-
-  <!-- ===== COUNTDOWN ===== -->
-  <section id="countdown">
-    <div class="container">
-      <h2 class="countdown-title reveal">До свадьбы осталось:</h2>
-
-      <div class="countdown-grid reveal">
-        <div class="countdown-unit">
-          <span class="countdown-num" id="cd-days">—</span>
-          <span class="countdown-label">дней</span>
-        </div>
-        <div class="countdown-unit">
-          <span class="countdown-num" id="cd-hours">—</span>
-          <span class="countdown-label">часов</span>
-        </div>
-        <div class="countdown-unit">
-          <span class="countdown-num" id="cd-minutes">—</span>
-          <span class="countdown-label">минут</span>
-        </div>
-        <div class="countdown-unit">
-          <span class="countdown-num" id="cd-seconds">—</span>
-          <span class="countdown-label">секунд</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="countdown-photo-bridge">
-    <img
-      class="countdown-couple-photo reveal"
-      src="assets/couple/main.jpg"
-      alt="Соня и Серёжа"
-      loading="lazy"
-    />
   </div>
 
   <!-- ===== FORM ===== -->
   <section id="form-section">
     <div class="container">
-      <h2 class="form-title reveal">Анкета гостя</h2>
-      <p class="form-subtitle reveal">
-        Пожалуйста, подтвердите свое присутствие на свадьбе до 1 августа — нам важно всё подготовить ♥
-      </p>
-      <p class="form-note reveal">
-        Заполнять можно сразу за несколько человек (просто напишите все имена) или только за одного —
-        анкету можно заполнять несколько раз для каждого гостя
-      </p>
+      <div class="form-intro">
+        <h2 class="form-title">Анкета гостя</h2>
+        <p class="form-subtitle">
+          Пожалуйста, подтвердите свое присутствие на свадьбе до 1 августа — нам важно всё подготовить ♥
+        </p>
+        <p class="form-note">
+          Заполнять можно сразу за несколько человек (просто напишите все имена) или только за одного —
+          анкету можно заполнять несколько раз для каждого гостя
+        </p>
+      </div>
 
       <!-- Thank-you screen -->
       <div id="thank-you">
@@ -460,7 +439,7 @@
             </label>
             <label class="checkbox-label">
               <input type="checkbox" name="alcohol" value="предпочитаю безалкогольное" />
-              <span class="choice-text">предпочитаю безалкогольное</span>
+              <span class="choice-text">предпочитаем безалкогольное</span>
             </label>
           </div>
         </div>
@@ -522,19 +501,52 @@
     </div>
   </section>
 
-
-
-  <!-- ===== FOOTER ===== -->
-  <footer>
-    <p class="footer-signoff">С любовью,<br>Соня и Серёжа</p>
+  <div class="form-footer-photo-bridge">
     <img
-      class="footer-icon"
-      src="assets/icons/footer.png"
-      alt=""
-      aria-hidden="true"
+      class="form-footer-photo reveal"
+      src="assets/couple/main.jpg"
+      alt="Соня и Серёжа"
       loading="lazy"
     />
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="reveal-group">
+    <section id="countdown" class="countdown--footer">
+      <h2 class="countdown-title reveal">Встретимся через:</h2>
+
+      <div class="countdown-grid reveal">
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-days">—</span>
+          <span class="countdown-label">дней</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-hours">—</span>
+          <span class="countdown-label">часов</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-minutes">—</span>
+          <span class="countdown-label">минут</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-seconds">—</span>
+          <span class="countdown-label">секунд</span>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-signoff reveal">С любовью, Соня и Серёжа</p>
+
+    <img
+    class="footer-icon reveal"
+    src="assets/icons/footer.png"
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+  />
   </footer>
+
+  </div>
 
   <script src="app.js"></script>
 </body>
