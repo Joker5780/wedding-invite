@@ -307,6 +307,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--dark);
   margin-bottom: 1.2rem;
   line-height: 1.2;
+  padding: 0 var(--page-gutter);
 }
 
 .greeting-intro {
@@ -1254,7 +1255,8 @@ footer {
   .cal-week { column-gap: 0.55rem; }
 
   .greeting-letter {
-    bottom: 0.85rem;
+    bottom: 0.75rem;
+    left: 1.5rem;
   }
 
   .hero-rings-icon {
