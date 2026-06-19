@@ -1,7 +1,7 @@
 {
   "default":  { "greeting": "Дорогие друзья и родные!", "type": "default" },
-  "a7f3k2":   { "greeting": "Дорогая Аня!",             "type": "friend", "note": "Аня Иванова" },
   "x9m4qp":   { "greeting": "Дорогие мама и папа!",     "type": "family", "note": "родители Сони" },
   "397kct": {"greeting":"Дорогие мама и папа!","type":"family","note":"Родители Сережи"},
-  
+  "bc48xj": {"greeting":"Дорогие Катя и Полина!","type":"friend", "note": "Организаторы"}
+
 }
