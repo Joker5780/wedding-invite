@@ -345,12 +345,6 @@ function initDresscodeCarousel() {
     e.preventDefault();
     carousel.scrollLeft = scrollLeft - (e.pageX - startX);
   });
-
-  carousel.addEventListener('wheel', e => {
-    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
-    e.preventDefault();
-    carousel.scrollLeft += e.deltaY;
-  }, { passive: false });
 }
 
 /* ===== INIT ===== */

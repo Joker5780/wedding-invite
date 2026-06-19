@@ -38,6 +38,7 @@
   --font-sacramento: 'Sacramento', cursive;
 
   --dark: #3A0D14;
+  --page-gutter: 1.5rem;
 }
 
 html {
@@ -116,7 +117,7 @@ a { color: inherit; text-decoration: none; }
 .container {
   max-width: 720px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 var(--page-gutter);
 }
 
 /* ===== WAVE DIVIDERS ===== */
@@ -152,7 +153,7 @@ a { color: inherit; text-decoration: none; }
 #hero {
   background: var(--cream);
   text-align: center;
-  padding: 0.5rem 1.5rem 0;
+  padding: 0.5rem var(--page-gutter) 0;
   color: var(--dark);
 }
 
@@ -239,7 +240,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-date-wrap {
-  padding: 0 1rem 2.5rem;
+  padding: 0 0 2.5rem;
 }
 
 .hero-date-block {
@@ -277,14 +278,14 @@ a { color: inherit; text-decoration: none; }
 /* ===== GREETING ===== */
 #greeting {
   background: var(--cream);
-  padding: 2rem 1.5rem 0rem;
+  padding: 2rem var(--page-gutter) 0;
 }
 
 .greeting-card {
   position: relative;
   background: var(--pink);
   border-radius: 16px;
-  padding: 3.5rem 2rem 3.5rem;
+  padding: 3.5rem 0 3.5rem;
   text-align: center;
   max-width: 540px;
   margin: 0 auto;
@@ -339,7 +340,7 @@ a { color: inherit; text-decoration: none; }
 /* ===== CALENDAR ===== */
 #calendar {
   background: var(--cream);
-  padding: 3rem 1.5rem;
+  padding: 3rem 0;
   text-align: center;
   overflow: visible;
 }
@@ -445,7 +446,7 @@ a { color: inherit; text-decoration: none; }
 /* ===== LOCATION ===== */
 #location {
   background: #8C2B36;
-  padding: 0 1.5rem 2.5rem;
+  padding: 0 0 2.5rem;
   text-align: center;
   position: relative;
   z-index: 0;
@@ -511,7 +512,12 @@ a { color: inherit; text-decoration: none; }
 /* ===== PROGRAM ===== */
 #program {
   background: #8C2B36;
-  padding: 3rem 1.5rem 0rem;
+  padding: 3rem 0 0;
+}
+
+#program .container {
+  max-width: 600px;
+  padding: 0 calc(var(--page-gutter) * 2);
 }
 
 .program-header {
@@ -546,9 +552,9 @@ a { color: inherit; text-decoration: none; }
 
 .program-list {
   list-style: none;
-  max-width: 440px;
-  margin: 0 auto 0rem;
-  padding-bottom: 3rem;
+  width: 100%;
+  margin: 0;
+  padding: 0 0 3rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -668,7 +674,7 @@ a { color: inherit; text-decoration: none; }
 .dresscode-inner {
   max-width: 480px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 var(--page-gutter);
 }
 
 .dresscode-top-icon {
@@ -703,7 +709,7 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   max-width: 400px;
   margin: 0 auto 1.4rem;
-  padding: 2rem 1.8rem;
+  padding: 2rem 0;
 }
 
 .dresscode-circle {
@@ -767,7 +773,7 @@ a { color: inherit; text-decoration: none; }
 .dresscode-footer {
   max-width: 480px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 var(--page-gutter);
 }
 
 .btn-dresscode-pinterest {
@@ -824,7 +830,7 @@ a { color: inherit; text-decoration: none; }
 .wishes-inner {
   max-width: 480px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 var(--page-gutter);
 }
 
 .wishes-title {
@@ -903,13 +909,13 @@ a { color: inherit; text-decoration: none; }
 /* ===== COUNTDOWN ===== */
 #countdown {
   background: var(--cream);
-  padding: 2rem 1.5rem 0;
+  padding: 2rem var(--page-gutter) 0;
   text-align: center;
 }
 
 #countdown.countdown--footer {
   background: transparent;
-  padding: 2rem 1.5rem 0;
+  padding: 2rem 0 0;
 }
 
 #countdown.countdown--footer .countdown-grid {
@@ -967,14 +973,14 @@ a { color: inherit; text-decoration: none; }
   height: auto;
   aspect-ratio: 4 / 3;
   margin: 0 auto;
-  border-radius: 16px;
   object-fit: cover;
+  border-radius: 16px;
 }
 
 /* ===== FORM ===== */
 #form-section {
   background: #EBBDB1;
-  padding: 2.5rem 1.5rem 3rem;
+  padding: 2.5rem 0 3rem;
   font-family: var(--font-tilda);
 }
 
@@ -1197,7 +1203,7 @@ a { color: inherit; text-decoration: none; }
 footer {
   background: var(--cream);
   text-align: center;
-  padding: 2rem 1.5rem 2.5rem;
+  padding: 2rem var(--page-gutter) 2.5rem;
 }
 
 .footer-signoff {
