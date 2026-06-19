@@ -1247,6 +1247,10 @@ footer {
   .hero-photos { max-width: 320px; }
   .cal-week { column-gap: 0.55rem; }
 
+  .greeting-letter {
+    bottom: 0.85rem;
+  }
+
   .hero-rings-icon {
     top: -22px;
     right: -16px;

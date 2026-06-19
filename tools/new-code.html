@@ -95,9 +95,9 @@
     <div class="form-group">
       <label for="type">Тип гостя</label>
       <select id="type">
-        <option value="default">default (без доп. блоков)</option>
-        <option value="friend">friend (+ поле «что хочется сказать»)</option>
-        <option value="family">family (+ вопрос про жильё)</option>
+        <option value="default">default (могут арендовать домик сами)</option>
+        <option value="friend">friend (могут арендовать домик сами)</option>
+        <option value="family">family (для родных забронировали домик)</option>
       </select>
     </div>
 
@@ -149,8 +149,8 @@
       const note     = document.getElementById('note').value.trim();
       const code     = randomCode(6);
 
-      const baseUrl = window.location.origin + window.location.pathname.replace('/tools/new-code.html', '/');
-      const link = baseUrl + '?g=' + code;
+      const baseUrl = 'https://www.sonya-and-seryozha.ru';
+      const link = `${baseUrl}/?g=${code}`;
 
       const jsonObj = { greeting, type };
       if (note) jsonObj.note = note;
