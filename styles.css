@@ -868,14 +868,14 @@ a { color: inherit; text-decoration: none; }
   text-align: left;
   display: block;
   transform-origin: left center;
-  margin-left: -0.65rem;
+  margin-left: -0.5rem;
 }
 
 .wish-label--right {
   text-align: right;
   display: block;
   transform-origin: right center;
-  margin-right: -0.65rem;
+  margin-right: -0.5rem;
 }
 
 .wish-text {
