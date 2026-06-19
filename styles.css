@@ -96,7 +96,7 @@ a { color: inherit; text-decoration: none; }
   transition:
     opacity 0.55s ease,
     transform 0.55s ease;
-  transition-delay: calc(var(--reveal-delay, 0) * 100ms);
+  transition-delay: calc(var(--reveal-delay, 0) * var(--reveal-stagger-ms, 60ms));
 }
 
 .reveal.in-view {
@@ -269,13 +269,13 @@ a { color: inherit; text-decoration: none; }
 .hero-line {
   display: block;
   width: clamp(180px, 55vw, 320px);
-  margin: 1.5rem auto 0;
+  margin: 2.5rem auto 0;
 }
 
 /* ===== GREETING ===== */
 #greeting {
   background: var(--cream);
-  padding: 4rem 1.5rem 0rem;
+  padding: 2rem 1.5rem 0rem;
 }
 
 .greeting-card {
@@ -610,6 +610,7 @@ a { color: inherit; text-decoration: none; }
   background: var(--cream);
   padding-bottom: 2.5rem;
   position: relative;
+  margin-top: -2px;
 }
 
 .instax-bridge__content {
@@ -627,7 +628,7 @@ a { color: inherit; text-decoration: none; }
   top: 0;
   left: 0;
   right: 0;
-  height: 40%;
+  height: calc(40% + 2px);
   background: #8C2B36;
   z-index: 0;
 }
@@ -636,11 +637,11 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 40%;
+  transform: none;
   z-index: 1;
   height: clamp(70px, 20vw, 100px);
-  overflow: visible;
+  overflow: hidden;
   pointer-events: none;
 }
 
@@ -800,12 +801,14 @@ a { color: inherit; text-decoration: none; }
 
 .wave--wishes-bottom,
 .wave--wishes-form {
-  overflow: visible;
-  margin-bottom: -1px;
+  overflow: hidden;
+  margin-top: -2px;
+  margin-bottom: -2px;
 }
 
 .wave--wishes-form {
-  background: #EBBDB1;
+  background: #646B30;
+  height: clamp(70px, 18vw, 100px);
 }
 
 #wishes {
@@ -854,14 +857,14 @@ a { color: inherit; text-decoration: none; }
   text-align: left;
   display: block;
   transform-origin: left center;
-  margin-left: -1.5rem;
+  margin-left: -1rem;
 }
 
 .wish-label--right {
   text-align: right;
   display: block;
   transform-origin: right center;
-  margin-right: -1.5rem;
+  margin-right: -1rem;
 }
 
 .wish-text {
@@ -1204,7 +1207,7 @@ footer {
 .footer-icon {
   display: block;
   width: clamp(75px, 40vw, 100px);
-  margin: 0rem auto 3rem;
+  margin: 0rem auto 0rem;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -1241,7 +1244,7 @@ footer {
 
   .hero-rings-icon {
     top: -22px;
-    right: -6px;
+    right: -16px;
     width: 40px;
   }
 }

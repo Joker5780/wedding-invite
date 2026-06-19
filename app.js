@@ -66,17 +66,30 @@ function startHearts() {
 
 /* ===== SCROLL REVEAL ===== */
 
-const REVEAL_STAGGER_MS = 100;
-const REVEAL_SCROLL_IN = 0.22; // доля высоты экрана — нужно проскроллить глубже
+const REVEAL_STAGGER_MS = 60;
+const REVEAL_SCROLL_IN = 0.10; // доля высоты экрана — элемент чуть глубже центра экрана
 
 function getRevealOffsetPx() {
   return Math.round(window.innerHeight * REVEAL_SCROLL_IN);
 }
 
-function isInViewport(el) {
-  const offset = getRevealOffsetPx();
+function isVisibleOnLoad(el) {
   const rect = el.getBoundingClientRect();
-  return rect.top < window.innerHeight - offset && rect.bottom > 0;
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
+function activateVisibleReveals(reveals, groups) {
+  reveals.forEach(el => {
+    if (el.classList.contains('in-view')) return;
+    if (el.closest('.reveal-group')) return;
+    if (isVisibleOnLoad(el)) activateReveal(el);
+  });
+
+  groups.forEach(group => {
+    const pending = group.querySelectorAll('.reveal:not(.in-view)');
+    if (!pending.length) return;
+    if (isVisibleOnLoad(group)) pending.forEach(activateReveal);
+  });
 }
 
 function activateReveal(el) {
@@ -86,6 +99,8 @@ function activateReveal(el) {
 function initScrollReveal() {
   const reveals = document.querySelectorAll('.reveal');
   const groups = document.querySelectorAll('.reveal-group');
+
+  document.documentElement.style.setProperty('--reveal-stagger-ms', `${REVEAL_STAGGER_MS}ms`);
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     reveals.forEach(activateReveal);
@@ -129,16 +144,8 @@ function initScrollReveal() {
     itemObserver.observe(el);
   });
 
-  reveals.forEach(el => {
-    if (el.closest('.reveal-group')) return;
-    if (isInViewport(el)) activateReveal(el);
-  });
-
-  groups.forEach(group => {
-    if (isInViewport(group)) {
-      group.querySelectorAll('.reveal').forEach(activateReveal);
-    }
-  });
+  activateVisibleReveals(reveals, groups);
+  window.addEventListener('load', () => activateVisibleReveals(reveals, groups));
 }
 
 /* ===== COUNTDOWN ===== */
